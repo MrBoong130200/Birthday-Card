@@ -89,8 +89,8 @@
             heart.classList.add("floating-heart");
             heart.innerText = "❤️";
             document.body.appendChild(heart);
-            heart.style.left = `${event.clientX}px`;
-            heart.style.top = `${event.clientY}px`;
+            heart.style.left = `${event.touches ? event.touches[0].clientX : event.clientX}px`;
+            heart.style.top = `${event.touches ? event.touches[0].clientY : event.clientY}px`;
             setTimeout(() => heart.remove(), 1500);
         }
 
@@ -98,8 +98,17 @@
             createHeart(event);
             heartInterval = setInterval(() => createHeart(event), 200);
         });
-
+        
         document.addEventListener("mouseup", () => {
+            clearInterval(heartInterval);
+        });
+
+        document.addEventListener("touchstart", (event) => {
+            createHeart(event);
+            heartInterval = setInterval(() => createHeart(event), 200);
+        });
+
+        document.addEventListener("touchend", () => {
             clearInterval(heartInterval);
         });
     </script>
