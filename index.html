@@ -12,6 +12,7 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            user-select: none; /* Prevent text selection */
         }
         .card {
             background: white;
@@ -59,6 +60,26 @@
             font-size: 30px;
             animation: floatUp 1s ease-out forwards;
         }
+        .floating-text {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            font-weight: bold;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+        .button {
+            background-color: #e63946;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #c92a2a;
+        }
         @keyframes floatUp {
             0% { transform: translateY(0) scale(1); opacity: 1; }
             100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
@@ -90,26 +111,9 @@
         }
         setInterval(updateCountdown, 1000);
 
-        function handleClick(event) {
-            let x = event.clientX || event.touches[0].clientX;
-            let y = event.clientY || event.touches[0].clientY;
-            for (let i = 0; i < 10; i++) {
-                createHeart(x, y);
-            }
+        function showPopup() {
+            alert("Congratulations, my love! 🎉❤️ You are the most special person in my life!");
         }
-
-        function createHeart(x, y) {
-            const heart = document.createElement("div");
-            heart.innerHTML = "❤️";
-            heart.classList.add("floating-heart");
-            heart.style.left = `${x}px`;
-            heart.style.top = `${y}px`;
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1000);
-        }
-
-        document.addEventListener("click", handleClick);
-        document.addEventListener("touchstart", handleClick);
     </script>
 </head>
 <body onload="updateCountdown()">
@@ -118,6 +122,7 @@
         <p class="message">You are the light of my life, the beat in my heart, and the smile on my face. On this special day, I just want to remind you how deeply I love and cherish you. May your day be as amazing and beautiful as you are! Happy Birthday! 🎉🎂</p>
         <p id="countdown"></p>
         <p id="congratulate"></p>
+        <button class="button" onclick="showPopup()">Click me</button>
     </div>
 </body>
 </html>
