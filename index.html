@@ -11,11 +11,12 @@
             background-color: #ffccdc;
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         .card {
             background: white;
-            width: 60%;
+            width: 90%;
+            max-width: 400px;
             margin: 50px auto;
             padding: 20px;
             border-radius: 15px;
@@ -24,10 +25,11 @@
         }
         h1 {
             color: #e63946;
+            font-size: 24px;
         }
         .heart {
             color: red;
-            font-size: 50px;
+            font-size: 40px;
             animation: heartbeat 1s infinite;
         }
         @keyframes heartbeat {
@@ -36,17 +38,17 @@
             100% { transform: scale(1); }
         }
         .message {
-            font-size: 20px;
+            font-size: 18px;
             color: #333;
         }
         #countdown {
-            font-size: 24px;
+            font-size: 20px;
             color: #e63946;
             font-weight: bold;
             margin-top: 20px;
         }
         #congratulate {
-            font-size: 22px;
+            font-size: 20px;
             color: #d62828;
             font-weight: bold;
             margin-top: 10px;
