@@ -13,6 +13,7 @@
             padding: 0;
             overflow-x: hidden;
             user-select: none; /* Prevent text selection */
+            position: relative;
         }
         .card {
             background: white;
@@ -38,34 +39,15 @@
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
-        .message {
-            font-size: 18px;
-            color: #333;
-        }
-        #countdown {
-            font-size: 20px;
-            color: #e63946;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        #congratulate {
-            font-size: 20px;
-            color: #d62828;
-            font-weight: bold;
-            margin-top: 10px;
-        }
         .floating-heart {
             position: absolute;
             color: red;
             font-size: 30px;
-            animation: floatUp 1s ease-out forwards;
-        }
-        .floating-text {
-            position: absolute;
-            color: red;
-            font-size: 24px;
-            font-weight: bold;
             animation: floatUp 1.5s ease-out forwards;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
         }
         .button {
             background-color: #e63946;
@@ -80,14 +62,10 @@
         .button:hover {
             background-color: #c92a2a;
         }
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
-        }
     </style>
     <script>
         function updateCountdown() {
-            const birthday = new Date(new Date().getFullYear(), 1, 13); // February 13th
+            const birthday = new Date(new Date().getFullYear(), 1, 13);
             const now = new Date();
             if (now > birthday) {
                 birthday.setFullYear(now.getFullYear() + 1);
@@ -98,22 +76,32 @@
             const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
             document.getElementById('countdown').innerText = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-            
-            let message = "";
-            if (days > 1) {
-                message = `Just ${days} days left! You are amazing! 🎉`;
-            } else if (days === 1) {
-                message = "Only 1 day left! Get ready for your special day! 🎂";
-            } else {
-                message = "Happy Birthday! 🎈🎊";
-            }
-            document.getElementById('congratulate').innerText = message;
         }
         setInterval(updateCountdown, 1000);
 
         function showPopup() {
             alert("Congratulations, my love! 🎉❤️ You are the most special person in my life!");
         }
+
+        let heartInterval;
+        function createHeart(event) {
+            const heart = document.createElement("div");
+            heart.classList.add("floating-heart");
+            heart.innerText = "❤️";
+            document.body.appendChild(heart);
+            heart.style.left = `${event.clientX}px`;
+            heart.style.top = `${event.clientY}px`;
+            setTimeout(() => heart.remove(), 1500);
+        }
+
+        document.addEventListener("mousedown", (event) => {
+            createHeart(event);
+            heartInterval = setInterval(() => createHeart(event), 200);
+        });
+
+        document.addEventListener("mouseup", () => {
+            clearInterval(heartInterval);
+        });
     </script>
 </head>
 <body onload="updateCountdown()">
@@ -121,7 +109,6 @@
         <h1>Happy Birthday My Love! <span class="heart">❤️</span></h1>
         <p class="message">You are the light of my life, the beat in my heart, and the smile on my face. On this special day, I just want to remind you how deeply I love and cherish you. May your day be as amazing and beautiful as you are! Happy Birthday! 🎉🎂</p>
         <p id="countdown"></p>
-        <p id="congratulate"></p>
         <button class="button" onclick="showPopup()">Click me</button>
     </div>
 </body>
